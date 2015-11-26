@@ -10,10 +10,17 @@ const Board = ({game}) => {
 
       row.forEach( (column, colIndex) => {
         let cellKey = () => `cell-${rowIndex}-${colIndex}`
-        console.log('cellKey: ', cellKey())
+        let coords = [rowIndex, colIndex]
+        let className = `${column} `
+        let re = new RegExp(`\\[${rowIndex}\\,${colIndex}\\]`)
+
+        if (game.winningSet && re.test(game.winningSet)) {
+          className += 'winner'
+        }
+
         columns.push(
           <td
-              className={column}
+              className={className}
               onClick={ () => {
                 Store.dispatch({
                   type: 'PLAY',
@@ -25,12 +32,9 @@ const Board = ({game}) => {
         )
       })
 
-      console.log('rowKey: ', rowKey())
-
       rows.push(
         <tr>{columns}</tr>
       )
-
   })
 
   return (

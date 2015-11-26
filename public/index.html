@@ -40,6 +40,12 @@ body {
 
   top: 50%;
   margin-top: -227px;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
 }
 
 h1 {
@@ -59,7 +65,7 @@ table, td {
 table.X td {
   border-color: #e74c3c;
 }
-table.X td.X {
+td.X.winner {
   font-weight: 500;
   background-color: #e74c3c;
   color: white;
@@ -68,7 +74,7 @@ table.X td.X {
 table.O td {
   border-color: #2980b9;
 }
-table.O td.O {
+td.O.winner {
   font-weight: 500;
   background-color: #2980b9;
   color: white;

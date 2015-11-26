@@ -1,20 +1,29 @@
+import deepFreeze from 'deep-freeze';
+
 const makePlay = (state, action) => {
+  deepFreeze(state)
+
+  let obj = deepCopyState(state)
+
   let row = action.row,
       column = action.column,
-      cell = state.board[row][column]
+      cell = obj.board[row][column]
 
-  if (state.winner || state.tie || cell) {
-    return state
+  if (obj.winner || obj.tie || cell) {
+    return obj
   }
 
-  state.board[row][column] = state.playersTurn
-  state.playersTurn = state.playersTurn == 'X' ? 'O' : 'X'
+  obj.board[row][column] = obj.playersTurn
+  obj.playersTurn = obj.playersTurn == 'X' ? 'O' : 'X'
 
-  return state
+  return obj
 }
 
 const checkWin = (state) => {
+  deepFreeze(state)
   let winner = undefined
+
+  let obj = deepCopyState(state)
 
   let wins = [
     // Horizontal
@@ -39,25 +48,29 @@ const checkWin = (state) => {
     let val = win.map( coord => {
       let x = coord[0],
           y = coord[1]
-      return state.board[x][y]
+      return obj.board[x][y]
     }).join('')
 
     if (val === 'XXX' || val === 'OOO') {
-      winner = val.split('')[0]
+      winner = {
+        player: val.split('')[0],
+        winningSet: JSON.stringify(win)
+      }
     }
 
     catStr += val
   })
 
   if (winner) {
-    state.winner = winner
+    obj.winner = winner.player
+    obj.winningSet = winner.winningSet
   }
 
   if (catStr.length == 24) {
-    state.tie = true
+    obj.tie = true
   }
 
-  return state
+  return obj
 }
 
 const genEmptyBoard = () => ([
@@ -66,12 +79,33 @@ const genEmptyBoard = () => ([
     [null, null, null]
 ])
 
-const genNewGame = () => ({
-  playersTurn: 'X',
-  board: genEmptyBoard(),
-  winner: undefined,
-  tie: false
-})
+const genNewGame = () => {
+  let state = {
+    board: genEmptyBoard(),
+    playersTurn: 'X',
+    tie: false,
+    winner: undefined,
+    winningSet: undefined
+  }
+
+  deepFreeze(state)
+  return state
+}
+
+const deepCopyState = (state) => {
+  let board = []
+
+  state.board.some( r => {
+    board.push(r.slice())
+  })
+
+  let obj = {
+    ...state,
+    board: board
+  }
+
+  return obj
+}
 
 export {
   makePlay,
