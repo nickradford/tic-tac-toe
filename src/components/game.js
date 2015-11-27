@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import InfoComponent from './info';
 import Board from './board';
 
-const Game = ({
-  game
-}) => {
-  return (
-    <div className='game'>
-      <Board game={game} />
-      <InfoComponent game={game} />
-    </div>
-  )
+class Game extends Component {
+  render() {
+    return (
+      <div className='game'>
+        <Board game={this.props.game} />
+        <InfoComponent game={this.props.game} />
+      </div>
+    )
+  }
 }
 
 export default Game;
