@@ -31,7 +31,7 @@ const NormalPlayComponent = ({game}) => (
 const WinnerComponent = ({game}) => (
     <div>
         <h1>Player
-            <span className={game.winner}>{game.winner}</span>
+            <span className={game.winner}> {game.winner} </span>
             won!!!</h1>
         <RestartButton restart={restart}/>
     </div>
