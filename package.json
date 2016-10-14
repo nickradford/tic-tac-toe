@@ -12,6 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "deep-freeze": "0.0.1",
+    "inferno": "^0.7.27",
+    "inferno-dom": "^0.7.27",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "redux": "^3.0.4"
