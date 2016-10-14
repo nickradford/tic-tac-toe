@@ -22,7 +22,7 @@ const InfoComponent = ({game}) => {
 const restart = () => Store.dispatch({type: 'RESTART'})
 
 const NormalPlayComponent = ({game}) => (
-    <h1>Players turn:
+    <h1>Player's turn:
         <span className={game.playersTurn}>
             {game.playersTurn}</span>
     </h1>
